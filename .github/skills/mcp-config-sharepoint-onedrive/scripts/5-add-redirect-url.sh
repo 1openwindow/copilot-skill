@@ -52,6 +52,4 @@ echo "5. Test it by asking: 'List my recent 3 documents on OneDrive'"
 echo "6. First time: Click consent link and sign in"
 echo "7. Done! Your agent can now access SharePoint/OneDrive"
 
-echo "4. Done! Agent can now access SharePoint/OneDrive"
-
 

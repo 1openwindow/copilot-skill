@@ -1,6 +1,6 @@
 ---
 name: mcp-config-sharepoint-onedrive
-description: Configure MCP server with OAuth for SharePoint/OneDrive access on Foundry agents. Use when asked to set up or debug SharePoint/OneDrive MCP integration.
+description: Configure MCP server with OAuth for SharePoint/OneDrive access on Foundry agents. Use when asked to set up SharePoint/OneDrive MCP integration.
 ---
 
 # MCP SharePoint/OneDrive Configuration
@@ -58,6 +58,7 @@ If missing, guide installation first.
 - Script: `./scripts/5-add-redirect-url.sh`
 - Does: Adds Foundry redirect URL to app
 - User action: Paste redirect URL when prompted
+- Final output: Show the completion message with next steps to the user
 
 ## Example Interaction
 
@@ -103,7 +104,34 @@ Copilot: [Executes script 3]
 Outputs all values for Foundry portal.
 Ready?"
 
-[Continue through steps 4-5]
+User: "Yes"
+
+Copilot: [Executes script 4]
+"✅ Done! Here are the exact values to paste into Foundry (copy-ready):
+[pastes the formatted config block from the script output]"
+
+**Step 5 of 5: Add Redirect URL**
+After saving the config in Foundry, copy the redirect URL and paste it here.
+Ready?"
+
+User: "Yes"
+
+Copilot: [Executes script 5 and shows completion message]
+"✅ Redirect URL added!
+
+════════════════════════════════════════
+🎉 Configuration Complete!
+════════════════════════════════════════
+
+Next: Add this tool to your agent
+
+1. Go to: https://ai.azure.com
+2. Select your agent
+3. Click 'Tools' or find the tools section
+4. Add the 'SharePoint and OneDrive' tool
+5. Test it by asking: 'List my recent 3 documents on OneDrive'
+6. First time: Click consent link and sign in
+7. Done! Your agent can now access SharePoint/OneDrive"
 ```
 
 ## Troubleshooting
