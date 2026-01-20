@@ -42,10 +42,16 @@ echo "════════════════════════�
 echo "🎉 Configuration Complete!"
 echo "════════════════════════════════════════"
 echo ""
-echo "Test it:"
-echo "1. Chat with your Foundry agent"
-echo "2. Ask: 'List my latest 3 OneDrive files'"
-echo "3. First time: Click consent link and sign in"
+echo "Next: Add this tool to your agent"
+echo ""
+echo "1. Go to: https://ai.azure.com"
+echo "2. Select your agent"
+echo "3. Click 'Tools' or find the tools section"
+echo "4. Add the 'SharePoint and OneDrive' tool"
+echo "5. Test it by asking: 'List my recent 3 documents on OneDrive'"
+echo "6. First time: Click consent link and sign in"
+echo "7. Done! Your agent can now access SharePoint/OneDrive"
+
 echo "4. Done! Agent can now access SharePoint/OneDrive"
 
 
