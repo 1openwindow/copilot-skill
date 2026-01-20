@@ -51,7 +51,8 @@ If missing, guide installation first.
 
 **Step 4: Generate Foundry Config**
 - Script: `./scripts/4-generate-foundry-config.sh`
-- Does: Outputs formatted config values
+- Does: Outputs formatted config values **including MCP endpoint**
+- MCP Endpoint: `https://agent365.svc.cloud.microsoft/agents/servers/mcp_ODSPRemoteServer`
 - User action: Copy values into Foundry portal
 
 **Step 5: Add Redirect URL**
@@ -122,7 +123,9 @@ If user prefers manual or Azure CLI unavailable, provide these portal instructio
    - Select: `McpServers.OneDriveSharepoint.All`
    - Grant admin consent
 
-4. **Foundry portal** → Agent → Connect tool → Custom MCP
+4. **Foundry portal** → Agent → Tools → Connect a tool → Custom MCP
+   - Name: SharePoint and OneDrive
+   - **Remote MCP Server endpoint**: `https://agent365.svc.cloud.microsoft/agents/servers/mcp_ODSPRemoteServer`
    - Auth: OAuth Identity Passthrough
    - Client ID/Secret: from above
    - Token URL: `https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/token`

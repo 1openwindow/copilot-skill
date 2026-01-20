@@ -9,13 +9,15 @@ echo "Step 5: Add Redirect URL"
 echo "============================================"
 echo ""
 
-if [ ! -f "entra-app-config.json" ]; then
-    echo "❌ entra-app-config.json not found!"
+CONFIG_FILE="$HOME/.mcp-sharepoint-config.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "❌ Config file not found!"
     echo "Run: ./scripts/1-create-app-registration.sh"
     exit 1
 fi
 
-CLIENT_ID=$(jq -r '.clientId' entra-app-config.json)
+CLIENT_ID=$(jq -r '.clientId' "$CONFIG_FILE")
 
 echo "Paste the Redirect URL from Foundry:"
 read -r REDIRECT_URL
@@ -45,4 +47,5 @@ echo "1. Chat with your Foundry agent"
 echo "2. Ask: 'List my recent SharePoint files'"
 echo "3. First time: Click consent link and sign in"
 echo "4. Done! Agent can now access SharePoint/OneDrive"
+
 

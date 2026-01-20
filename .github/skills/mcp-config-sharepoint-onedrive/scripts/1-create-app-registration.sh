@@ -26,21 +26,27 @@ fi
 echo "Creating app registration..."
 echo ""
 
+# Save config to current directory (not inside skills folder)
+CONFIG_FILE="$HOME/.mcp-sharepoint-config.json"
+
 # Create app
 az ad app create \
   --display-name "Foundry Agent SharePoint" \
   --sign-in-audience AzureADMyOrg \
   --query "{clientId:appId}" \
-  -o json > entra-app-config.json
+  -o json > "$CONFIG_FILE"
 
 # Add tenant ID
 TENANT_ID=$(az account show --query tenantId -o tsv)
-jq --arg tid "$TENANT_ID" '. + {tenantId: $tid}' entra-app-config.json > temp.json
-mv temp.json entra-app-config.json
+jq --arg tid "$TENANT_ID" '. + {tenantId: $tid}' "$CONFIG_FILE" > "$CONFIG_FILE.tmp"
+mv "$CONFIG_FILE.tmp" "$CONFIG_FILE"
 
 echo "✅ App created!"
 echo ""
-cat entra-app-config.json | jq .
+cat "$CONFIG_FILE" | jq .
+echo ""
+echo "💾 Config saved to: $CONFIG_FILE"
 echo ""
 echo "Next: ./scripts/2-create-client-secret.sh"
+
 

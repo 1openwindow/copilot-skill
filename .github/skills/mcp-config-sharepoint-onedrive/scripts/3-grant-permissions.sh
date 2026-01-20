@@ -9,13 +9,15 @@ echo "Step 3: Grant API Permissions"
 echo "============================================"
 echo ""
 
-if [ ! -f "entra-app-config.json" ]; then
-    echo "❌ entra-app-config.json not found!"
+CONFIG_FILE="$HOME/.mcp-sharepoint-config.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "❌ Config file not found!"
     echo "Run: ./scripts/1-create-app-registration.sh"
     exit 1
 fi
 
-CLIENT_ID=$(jq -r '.clientId' entra-app-config.json)
+CLIENT_ID=$(jq -r '.clientId' "$CONFIG_FILE")
 
 echo "⚠️  This step requires manual action in Azure Portal"
 echo ""
@@ -31,4 +33,5 @@ echo ""
 echo "⚠️  Requires Global Administrator role"
 echo ""
 echo "After completing, run: ./scripts/4-generate-foundry-config.sh"
+
 

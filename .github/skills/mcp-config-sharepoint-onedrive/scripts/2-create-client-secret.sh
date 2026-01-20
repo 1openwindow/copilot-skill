@@ -9,13 +9,15 @@ echo "Step 2: Create Client Secret"
 echo "============================================"
 echo ""
 
-if [ ! -f "entra-app-config.json" ]; then
-    echo "❌ entra-app-config.json not found!"
+CONFIG_FILE="$HOME/.mcp-sharepoint-config.json"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "❌ Config file not found!"
     echo "Run: ./scripts/1-create-app-registration.sh"
     exit 1
 fi
 
-CLIENT_ID=$(jq -r '.clientId' entra-app-config.json)
+CLIENT_ID=$(jq -r '.clientId' "$CONFIG_FILE")
 
 echo "Creating client secret (24 month expiry)..."
 echo ""
@@ -36,4 +38,5 @@ echo ""
 echo "================================================================"
 echo ""
 echo "Next: ./scripts/3-grant-permissions.sh"
+
 
