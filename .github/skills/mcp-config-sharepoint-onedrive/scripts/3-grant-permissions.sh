@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-# Step 3: Grant API Permissions (Manual Step)
-# Shows instructions for adding permission in portal
+# Step 3: Grant API Permissions
+# Adds permission and attempts admin consent
 
 echo "============================================"
 echo "Step 3: Grant API Permissions"
@@ -18,20 +18,70 @@ if [ ! -f "$CONFIG_FILE" ]; then
 fi
 
 CLIENT_ID=$(jq -r '.clientId' "$CONFIG_FILE")
+API_ID="ea9ffc3e-8a23-4a7d-836d-234d7c7565c1"
 
-echo "⚠️  This step requires manual action in Azure Portal"
+echo "Adding SharePoint/OneDrive permission..."
 echo ""
-echo "1. Go to: https://portal.azure.com"
-echo "2. Navigate: Microsoft Entra ID → App registrations"
-echo "3. Find: Foundry Agent SharePoint"
-echo "4. Go to: API permissions → Add a permission"
-echo "5. Search: ea9ffc3e-8a23-4a7d-836d-234d7c7565c1"
-echo "6. Select: McpServers.OneDriveSharepoint.All"
-echo "7. Click: Add permissions"
-echo "8. Click: Grant admin consent for [Your Org]"
+
+# Find the service principal for Agent 365 Tools
+echo "Looking up Agent 365 Tools service principal..."
+SP_OBJECT_ID=$(az ad sp list --filter "appId eq '$API_ID'" --query "[0].id" -o tsv)
+
+if [ -z "$SP_OBJECT_ID" ]; then
+    echo "⚠️  Agent 365 Tools service principal not found in your tenant"
+    echo "This might mean your tenant doesn't have Agent 365 MCP enabled yet."
+    echo ""
+    echo "Manual steps:"
+    echo "1. Go to: https://portal.azure.com"
+    echo "2. Microsoft Entra ID → App registrations → Your app"
+    echo "3. API permissions → Add → Search: $API_ID"
+    echo "4. Select: McpServers.OneDriveSharepoint.All"
+    echo "5. Grant admin consent"
+    exit 1
+fi
+
+# Get the permission ID for OneDriveSharepoint.All
+PERMISSION_ID=$(az ad sp show --id $SP_OBJECT_ID \
+    --query "oauth2PermissionScopes[?value=='McpServers.OneDriveSharepoint.All'].id" \
+    -o tsv)
+
+if [ -z "$PERMISSION_ID" ]; then
+    echo "❌ Could not find OneDriveSharepoint permission"
+    exit 1
+fi
+
+# Add the permission
+echo "Adding permission to app..."
+az ad app permission add \
+    --id "$CLIENT_ID" \
+    --api "$API_ID" \
+    --api-permissions "$PERMISSION_ID=Scope" 2>/dev/null || echo "Permission may already exist"
+
+echo "✅ Permission added!"
 echo ""
-echo "⚠️  Requires Global Administrator role"
+
+# Attempt to grant admin consent
+echo "Attempting to grant admin consent..."
+echo "(This requires Global Administrator role)"
 echo ""
-echo "After completing, run: ./scripts/4-generate-foundry-config.sh"
+
+if az ad app permission admin-consent --id "$CLIENT_ID" 2>/dev/null; then
+    echo "✅ Admin consent granted!"
+    echo ""
+    echo "Next: ./scripts/4-generate-foundry-config.sh"
+else
+    echo ""
+    echo "⚠️  Could not grant admin consent automatically"
+    echo "You need Global Administrator role for this step."
+    echo ""
+    echo "Please ask your Global Admin to:"
+    echo "1. Go to: https://portal.azure.com"
+    echo "2. Microsoft Entra ID → App registrations"
+    echo "3. Find: Foundry Agent SharePoint"
+    echo "4. API permissions → Grant admin consent for [Your Org]"
+    echo ""
+    echo "After admin grants consent, run: ./scripts/4-generate-foundry-config.sh"
+fi
+
 
 

@@ -44,15 +44,14 @@ If missing, guide installation first.
 - Does: Generates 24-month secret
 - User action: **Copy the secret immediately!**
 
-**Step 3: Grant Permissions** (Manual)
+**Step 3: Grant Permissions** (Automated with fallback)
 - Script: `./scripts/3-grant-permissions.sh`
-- Does: Shows portal instructions
-- User action: Add permission in portal, grant admin consent
+- Does: Looks up permission, adds it, attempts admin consent
+- User action: None if you have Global Admin role, otherwise ask admin to grant consent
 
 **Step 4: Generate Foundry Config**
 - Script: `./scripts/4-generate-foundry-config.sh`
-- Does: Outputs formatted config values **including MCP endpoint**
-- MCP Endpoint: `https://agent365.svc.cloud.microsoft/agents/servers/mcp_ODSPRemoteServer`
+- Does: Outputs formatted config values
 - User action: Copy values into Foundry portal
 
 **Step 5: Add Redirect URL**
@@ -86,7 +85,25 @@ Copilot: [Executes script 1]
 Generates secret (24mo expiry). ⚠️ Copy it immediately!
 Ready?"
 
-[Continue through all 5 steps]
+User: "Yes"
+
+Copilot: [Executes script 2]
+"✅ Done! Secret: [displays secret]
+
+**Step 3 of 5: Grant API Permissions**
+Adds SharePoint/OneDrive permission and grants admin consent.
+Ready?"
+
+User: "Yes"
+
+Copilot: [Executes script 3]
+"✅ Permission added and admin consent granted!
+
+**Step 4 of 5: Generate Foundry Config**
+Outputs all values for Foundry portal.
+Ready?"
+
+[Continue through steps 4-5]
 ```
 
 ## Troubleshooting

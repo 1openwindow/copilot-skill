@@ -44,7 +44,7 @@ echo "════════════════════════�
 echo ""
 echo "Test it:"
 echo "1. Chat with your Foundry agent"
-echo "2. Ask: 'List my recent SharePoint files'"
+echo "2. Ask: 'List my recent OneDrive files'"
 echo "3. First time: Click consent link and sign in"
 echo "4. Done! Agent can now access SharePoint/OneDrive"
 
