@@ -9,12 +9,16 @@ echo "Foundry Agent Teams App Setup"
 echo "============================================"
 echo ""
 
-# Step 1: Clone repository
-echo "Step 1: Cloning Teams app template..."
+# Step 1: Get directory name
+echo "Step 1: Clone Teams App Template"
 echo ""
+echo "What would you like to name your Teams app directory?"
+read -r TARGET_DIR
 
-REPO_URL="https://github.com/1openwindow/foundry_agent_teams_app"
-TARGET_DIR="foundry_agent_teams_app"
+if [ -z "$TARGET_DIR" ]; then
+    echo "❌ Directory name is required"
+    exit 1
+fi
 
 if [ -d "$TARGET_DIR" ]; then
     echo "⚠️  Directory '$TARGET_DIR' already exists!"
@@ -28,9 +32,12 @@ if [ -d "$TARGET_DIR" ]; then
     fi
 fi
 
+echo ""
+echo "Cloning repository..."
+REPO_URL="https://github.com/1openwindow/foundry_agent_teams_app"
 git clone "$REPO_URL" "$TARGET_DIR"
 
-echo "✅ Template cloned!"
+echo "✅ Template cloned to: $TARGET_DIR/"
 echo ""
 
 # Step 2: Get Foundry configuration
@@ -63,37 +70,18 @@ echo ""
 # Step 3: Update configuration files
 cd "$TARGET_DIR"
 
-# Create env directory
-mkdir -p env
+echo "Updating configuration files..."
 
-# Create configuration for all three debug scenarios
-echo "Creating configuration files..."
+# Update all three environment files
+for ENV_FILE in env/.env.playground.user env/.env.local.user env/.env.dev.user; do
+    if [ -f "$ENV_FILE" ]; then
+        sed -i.bak "s|FOUNDRY_ENDPOINT=.*|FOUNDRY_ENDPOINT=$FOUNDRY_ENDPOINT|g" "$ENV_FILE"
+        sed -i.bak "s|AGENT_NAME=.*|AGENT_NAME=$AGENT_NAME|g" "$ENV_FILE"
+        rm -f "$ENV_FILE.bak"
+    fi
+done
 
-# Playground debug
-cat > env/.env.playground.user << EOF
-# Foundry Agent Configuration - Playground Debug
-FOUNDRY_ENDPOINT=$FOUNDRY_ENDPOINT
-AGENT_NAME=$AGENT_NAME
-EOF
-
-# Local debug
-cat > env/.env.local.user << EOF
-# Foundry Agent Configuration - Local Debug
-FOUNDRY_ENDPOINT=$FOUNDRY_ENDPOINT
-AGENT_NAME=$AGENT_NAME
-EOF
-
-# Remote debug
-cat > env/.env.dev.user << EOF
-# Foundry Agent Configuration - Remote Debug
-FOUNDRY_ENDPOINT=$FOUNDRY_ENDPOINT
-AGENT_NAME=$AGENT_NAME
-EOF
-
-echo "✅ Configuration files created:"
-echo "  - env/.env.playground.user (Playground debug)"
-echo "  - env/.env.local.user (Local debug)"
-echo "  - env/.env.dev.user (Remote debug)"
+echo "✅ Configuration files updated!"
 echo ""
 echo "════════════════════════════════════════"
 echo "🎉 Setup Complete!"

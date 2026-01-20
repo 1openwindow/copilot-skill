@@ -28,9 +28,9 @@ Before starting, verify:
 - User has VS Code or similar IDE installed
 
 ### Step 1: Clone Teams App Template
-- Action: Clone the repository
-- Command: `git clone https://github.com/1openwindow/foundry_agent_teams_app`
-- User action: None (automated)
+- Action: Ask user for Teams app directory name, then clone the repository
+- Command: `git clone https://github.com/1openwindow/foundry_agent_teams_app <user-provided-name>`
+- User action: Provide a name for the Teams app directory
 
 ### Step 2: Get Foundry Configuration
 - Action: Ask user for their Foundry details
@@ -63,13 +63,12 @@ User: "I want to test my Foundry agent in Teams"
 Copilot: "I'll help you set up a Teams app to preview your agent. Takes ~3 minutes.
 
 **Step 1 of 4: Clone Teams App Template**
-I'll clone the template repository to get started.
-Ready?"
+What would you like to name your Teams app directory?"
 
-User: "Yes"
+User: "my-teams-app"
 
 Copilot: [Clones repo]
-"✅ Template cloned to: foundry_agent_teams_app/
+"✅ Template cloned to: my-teams-app/
 
 **Step 2 of 4: Get Your Foundry Configuration**
 I need two things from your Foundry setup:
@@ -99,9 +98,11 @@ Copilot: [Updates config files]
 All set! 
 
 To start debugging:
-1. Open the project folder in VS Code
-2. Press F5
-3. Teams will launch with your Foundry agent
+1. Open the project folder in VS Code:
+   cd my-teams-app && code .
+2. Choose debug scenario (Playground/Local/Dev)
+3. Press F5
+4. Teams will launch with your Foundry agent
 
 Your agent is now ready to test in Teams! 🎉"
 ```

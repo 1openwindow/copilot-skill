@@ -25,23 +25,6 @@ Guides setup of a Teams app for debugging and previewing Foundry agents:
 - Enable F5 debugging in VS Code
 - Test agents in Microsoft Teams
 
-## Quick Start
-
-### MCP Configuration (SharePoint/OneDrive)
-
-```bash
-cd .github/skills/mcp-config-sharepoint-onedrive
-# Follow step-by-step scripts 1-5 in /scripts
-```
-
-### Foundry Agent Teams App
-
-```bash
-cd .github/skills/foundry-agent-teams-app
-./scripts/setup.sh
-# Then open in VS Code and press F5
-```
-
 ## Prerequisites
 
 ### For MCP Configuration
