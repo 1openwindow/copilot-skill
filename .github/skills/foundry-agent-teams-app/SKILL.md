@@ -41,12 +41,19 @@ Before starting, verify:
 
 ### Step 3: Configure the App
 - Action: Update configuration files with user's Foundry details
-- Files to update: Configuration files in the cloned repo
+- Files created:
+  - `env/.env.playground.user` (Playground debug)
+  - `env/.env.local.user` (Local debug)
+  - `env/.env.dev.user` (Remote debug)
 - User action: None (automated)
 
 ### Step 4: Ready to Debug
-- Action: Inform user they can press F5
-- User action: Open project in IDE and press F5 to start debugging
+- Action: Inform user about debug options and how to start
+- Debug scenarios:
+  - **Playground**: Quick test in Teams App Test Tool
+  - **Local (F5)**: Debug locally with Teams client
+  - **Dev**: Deploy to remote environment
+- User action: Open project in IDE, select debug scenario, and press F5
 
 ## Example Interaction
 
@@ -115,10 +122,40 @@ Your agent is now ready to test in Teams! 🎉"
 
 ## Configuration Details
 
-The following files typically need configuration:
-- `.env` or `env/.env.local` - Environment variables
-- `teamsapp.yml` - Teams app configuration
-- Agent endpoint and name settings
+The following environment files need configuration based on your debug scenario:
+
+### Environment Files
+
+- **`env/.env.playground.user`** - For playground debug
+  - Quick testing in Teams App Test Tool
+  - No Teams client required
+
+- **`env/.env.local.user`** - For local debug
+  - Debug locally with Teams client
+  - F5 debugging in VS Code
+
+- **`env/.env.dev.user`** - For remote debug
+  - Deploy and debug in remote environment
+  - Production-like testing
+
+### Required Configuration in Environment Files
+
+Each file should contain:
+```
+FOUNDRY_ENDPOINT=<your-foundry-project-endpoint>
+AGENT_NAME=<your-agent-name>
+```
+
+Example:
+```
+FOUNDRY_ENDPOINT=https://myproject.api.azure-api.net
+AGENT_NAME=my-sharepoint-agent
+```
+
+### Other Configuration Files
+
+- `teamsapp.yml` - Teams app lifecycle configuration
+- `appPackage/manifest.json` - Teams app manifest
 
 ## Additional Notes
 - First run may take longer while dependencies install
