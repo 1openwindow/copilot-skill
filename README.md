@@ -1,32 +1,50 @@
-# MCP Configuration Skill
+# Foundry Agent Skills
 
-An interactive skill for configuring Model Context Protocol (MCP) servers with OAuth identity passthrough on Foundry agents, specifically for Microsoft SharePoint and OneDrive access.
+A collection of interactive skills for working with Azure Foundry agents.
 
 ## Overview
 
-This skill provides a guided, step-by-step process for:
+This repository contains skills for:
+
+### 1. MCP Configuration (SharePoint/OneDrive)
+Located in: `.github/skills/mcp-config-sharepoint-onedrive/`
+
+Provides a guided, step-by-step process for:
 - Creating Microsoft Entra app registrations
 - Configuring OAuth permissions
 - Setting up MCP servers in Foundry portal
 - Managing redirect URLs
 - Testing the configuration
 
-## Files
+### 2. Foundry Agent Teams App
+Located in: `.github/skills/foundry-agent-teams-app/`
 
-- `mcp-config-skill.sh` - Interactive bash script that guides you through the configuration
-- `mcp-config-skill.md` - Detailed documentation with all steps and troubleshooting
+Guides setup of a Teams app for debugging and previewing Foundry agents:
+- Clone Teams app template
+- Configure Foundry agent connection
+- Enable F5 debugging in VS Code
+- Test agents in Microsoft Teams
 
 ## Quick Start
 
-Run the interactive script:
+### MCP Configuration (SharePoint/OneDrive)
 
 ```bash
-./mcp-config-skill.sh
+cd .github/skills/mcp-config-sharepoint-onedrive
+# Follow step-by-step scripts 1-5 in /scripts
 ```
 
-The script will guide you through each step and save your configuration details.
+### Foundry Agent Teams App
+
+```bash
+cd .github/skills/foundry-agent-teams-app
+./scripts/setup.sh
+# Then open in VS Code and press F5
+```
 
 ## Prerequisites
+
+### For MCP Configuration
 
 Before running this skill, ensure you have:
 
@@ -37,7 +55,16 @@ Before running this skill, ensure you have:
 3. **Access to Foundry portal** with permissions to configure agents
 4. **Frontier tenant** (required for Agent 365 MCP servers)
 
-## What This Skill Configures
+### For Foundry Agent Teams App
+
+1. **Git** installed
+2. **VS Code** with Microsoft 365 Agents Toolkit extension
+3. **Node.js** (required by Microsoft 365 Agents Toolkit)
+4. **Foundry agent** already created and configured
+
+## MCP Configuration Details
+
+### What This Skill Configures
 
 This skill configures access to **SharePoint and OneDrive** using:
 
@@ -45,7 +72,7 @@ This skill configures access to **SharePoint and OneDrive** using:
 - **API ID**: `ea9ffc3e-8a23-4a7d-836d-234d7c7565c1`
 - **Authentication**: OAuth Identity Passthrough
 
-## Configuration Steps
+### Configuration Steps
 
 The skill guides you through:
 
@@ -75,14 +102,14 @@ The skill guides you through:
    - Complete user consent
    - Verify access
 
-## Output
+### Output
 
 The script generates:
 - Interactive guidance through each step
-- A configuration file with your settings: `mcp-config-YYYYMMDD-HHMMSS.txt`
+- A configuration file with your settings: `~/.mcp-sharepoint-config.json`
 - Color-coded instructions for easy following
 
-## Security Notes
+### Security Notes
 
 - Client secrets are **not** saved to configuration files
 - OAuth credentials are stored securely by Foundry Agent Service
@@ -90,7 +117,7 @@ The script generates:
 - Access tokens expire after ~1 hour (automatically refreshed)
 - Users can revoke access anytime through their Microsoft account settings
 
-## Troubleshooting
+### Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
@@ -99,7 +126,7 @@ The script generates:
 | Authentication failures | Check redirect URL matches exactly |
 | Token URL errors | Verify tenant ID is correct in all URLs |
 
-## Additional MCP Servers
+### Additional MCP Servers
 
 This skill focuses on SharePoint and OneDrive. To configure other Agent 365 MCP servers, use these permissions:
 
@@ -113,7 +140,7 @@ This skill focuses on SharePoint and OneDrive. To configure other Agent 365 MCP 
 - Admin Center: `McpServers.M365Admin.All`
 - Dataverse: `McpServers.Dataverse.All`
 
-## OAuth Identity Passthrough
+### OAuth Identity Passthrough
 
 This configuration uses **OAuth identity passthrough**, which:
 
@@ -123,10 +150,48 @@ This configuration uses **OAuth identity passthrough**, which:
 - Limits access based on specified scopes
 - Maintains separate credentials for each user-agent pair
 
-### Token Types
+#### Token Types
 
 - **Access Token**: Short-lived (typically 1 hour), used to call APIs
 - **Refresh Token**: Long-lived, used to obtain new access tokens
+
+---
+
+## Foundry Agent Teams App Details
+
+This skill helps you set up a Microsoft Teams app to test and debug your Foundry agents locally.
+
+### What It Does
+
+1. **Clones Template**: Gets the latest Teams app template from GitHub
+2. **Configures Agent**: Sets up your Foundry project endpoint and agent name
+3. **Enables Debugging**: Allows F5 debugging in VS Code with Microsoft 365 Agents Toolkit
+
+### Setup Process
+
+The automated script (`setup.sh`) will:
+- Clone the repository to `foundry_agent_teams_app/`
+- Prompt for your Foundry endpoint and agent name
+- Create configuration files
+- Display next steps for VS Code
+
+### After Setup
+
+1. Open the project in VS Code
+2. Press **F5** to start debugging
+3. Teams will launch with your agent
+4. Test your agent interactions in Teams chat
+
+### Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Clone fails | Check Git installation and internet connection |
+| Agent not responding | Verify Foundry endpoint and agent name |
+| F5 doesn't work | Install Microsoft 365 Agents Toolkit extension in VS Code |
+| Authentication error | Check Foundry agent OAuth configuration |
+
+---
 
 ## References
 
