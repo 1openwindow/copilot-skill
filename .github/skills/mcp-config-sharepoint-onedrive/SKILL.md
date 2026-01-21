@@ -36,8 +36,8 @@ If missing, guide installation first.
 
 **Step 1: Create App Registration**
 - Script: `./scripts/1-create-app-registration.sh`
-- Does: Creates Entra app, saves Client ID and Tenant ID
-- User action: None (automated)
+- Does: Checks for existing app, creates Entra app if needed, saves Client ID and Tenant ID
+- User action: If existing app found, choose to reuse or create new
 
 **Step 2: Create Client Secret**
 - Script: `./scripts/2-create-client-secret.sh`

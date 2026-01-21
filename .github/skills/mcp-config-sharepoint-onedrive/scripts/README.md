@@ -18,8 +18,10 @@ Run scripts in order:
 ./scripts/1-create-app-registration.sh
 ```
 **What it does:**
-- Creates new Entra app registration
-- Saves Client ID and Tenant ID to `$HOME/.mcp-sharepoint-config.json`
+- Checks if an existing app registration is configured
+- If found, asks whether to reuse existing app or create new one
+- Creates new Entra app registration (if needed)
+- Saves Client ID and Tenant ID to `$HOME/.agent-dev-meta/.mcp-sharepoint-config.json`
 
 ### 2. Create Client Secret
 ```bash
@@ -79,7 +81,7 @@ Run scripts in order:
 
 ## What Gets Created
 
-- **$HOME/.mcp-sharepoint-config.json**: Stores Client ID and Tenant ID
+- **$HOME/.agent-dev-meta/.mcp-sharepoint-config.json**: Stores Client ID and Tenant ID
 - **Entra app registration**: "Foundry Agent SharePoint" in Azure Portal
 - **Client secret**: 24-month validity
 - **Permission**: McpServers.OneDriveSharepoint.All (requires admin consent)
@@ -108,11 +110,11 @@ To remove the created resources:
 
 ```bash
 # Get the Client ID
-CLIENT_ID=$(jq -r '.clientId' ~/.mcp-sharepoint-config.json)
+CLIENT_ID=$(jq -r '.clientId' ~/.agent-dev-meta/.mcp-sharepoint-config.json)
 
 # Delete the app registration
 az ad app delete --id $CLIENT_ID
 
 # Remove config file
-rm ~/.mcp-sharepoint-config.json
+rm ~/.agent-dev-meta/.mcp-sharepoint-config.json
 ```

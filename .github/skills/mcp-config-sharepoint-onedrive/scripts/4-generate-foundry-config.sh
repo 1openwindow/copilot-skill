@@ -9,7 +9,7 @@ echo "Step 4: Generate Foundry Configuration"
 echo "============================================"
 echo ""
 
-CONFIG_FILE="$HOME/.mcp-sharepoint-config.json"
+CONFIG_FILE="$HOME/.agent-dev-meta/.mcp-sharepoint-config.json"
 
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "❌ Config file not found!"

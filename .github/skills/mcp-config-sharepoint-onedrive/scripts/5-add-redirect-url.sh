@@ -9,7 +9,7 @@ echo "Step 5: Add Redirect URL"
 echo "============================================"
 echo ""
 
-CONFIG_FILE="$HOME/.mcp-sharepoint-config.json"
+CONFIG_FILE="$HOME/.agent-dev-meta/.mcp-sharepoint-config.json"
 
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "❌ Config file not found!"
@@ -31,9 +31,15 @@ echo ""
 echo "Adding redirect URL..."
 
 # Get current URIs and add new one
-CURRENT_URIS=$(az ad app show --id "$CLIENT_ID" --query "web.redirectUris" -o json || echo "[]")
-NEW_URIS=$(echo "$CURRENT_URIS" | jq --arg uri "$REDIRECT_URL" '. + [$uri] | unique')
-az ad app update --id "$CLIENT_ID" --web-redirect-uris ${NEW_URIS[@]//[\[\]\"]/}
+CURRENT_URIS=$(az ad app show --id "$CLIENT_ID" --query "web.redirectUris" -o json 2>/dev/null || echo "[]")
+NEW_URIS_JSON=$(echo "$CURRENT_URIS" | jq --arg uri "$REDIRECT_URL" '. // [] | . + [$uri] | unique')
+
+URI_ARGS=()
+while IFS= read -r uri; do
+    [ -n "$uri" ] && URI_ARGS+=("$uri")
+done < <(echo "$NEW_URIS_JSON" | jq -r '.[]')
+
+az ad app update --id "$CLIENT_ID" --web-redirect-uris "${URI_ARGS[@]}"
 
 echo ""
 echo "✅ Redirect URL added!"
