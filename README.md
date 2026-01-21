@@ -89,7 +89,7 @@ The skill guides you through:
 
 The script generates:
 - Interactive guidance through each step
-- A configuration file with your settings: `~/.mcp-sharepoint-config.json`
+- A configuration file with your settings: `~/.agent-dev-meta/.mcp-sharepoint-config.json`
 - Color-coded instructions for easy following
 
 ### Security Notes
