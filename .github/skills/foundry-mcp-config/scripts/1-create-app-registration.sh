@@ -111,5 +111,3 @@ echo ""
 echo "💾 Config saved to: $CONFIG_FILE"
 echo ""
 echo "Next: ./scripts/2-create-client-secret.sh"
-
-

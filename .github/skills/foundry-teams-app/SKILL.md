@@ -1,5 +1,5 @@
 ---
-name: foundry-agent-teams-app
+name: foundry-teams-app
 description: Set up and debug Foundry agents with MCP tools in Microsoft Teams. Use when asked to preview, test, or debug a Foundry agent in Teams.
 ---
 

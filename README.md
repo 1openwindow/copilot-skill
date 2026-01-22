@@ -7,7 +7,7 @@ A collection of interactive skills for working with Azure Foundry agents.
 This repository contains skills for:
 
 ### 1. MCP Configuration (SharePoint/OneDrive)
-Located in: `.github/skills/mcp-config-sharepoint-onedrive/`
+Located in: `.github/skills/foundry-mcp-config/`
 
 Provides a guided, step-by-step process for:
 - Creating Microsoft Entra app registrations
@@ -17,7 +17,7 @@ Provides a guided, step-by-step process for:
 - Testing the configuration
 
 ### 2. Foundry Agent Teams App
-Located in: `.github/skills/foundry-agent-teams-app/`
+Located in: `.github/skills/foundry-teams-app/`
 
 Guides setup of a Teams app for debugging and previewing Foundry agents:
 - Clone Teams app template

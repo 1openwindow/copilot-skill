@@ -1,5 +1,5 @@
 ---
-name: mcp-config-sharepoint-onedrive
+name: foundry-mcp-config
 description: Configure MCP server with OAuth for SharePoint/OneDrive access on Foundry agents. Use when asked to set up SharePoint/OneDrive MCP integration.
 ---
 

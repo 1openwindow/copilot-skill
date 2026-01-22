@@ -38,5 +38,3 @@ echo ""
 echo "================================================================"
 echo ""
 echo "Next: ./scripts/3-grant-permissions.sh"
-
-

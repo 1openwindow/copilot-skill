@@ -82,6 +82,3 @@ else
     echo ""
     echo "After admin grants consent, run: ./scripts/4-generate-foundry-config.sh"
 fi
-
-
-
