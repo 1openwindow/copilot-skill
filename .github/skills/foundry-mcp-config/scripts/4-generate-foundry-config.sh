@@ -54,5 +54,3 @@ echo ""
 echo "After saving in Foundry:"
 echo "1. Copy the Redirect URL"
 echo "2. Run: ./scripts/5-add-redirect-url.sh"
-
-
